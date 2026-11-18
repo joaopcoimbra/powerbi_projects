@@ -1,0 +1,100 @@
+
+# ============================================================
+# POWER BI PROJECTS - .gitignore
+# ============================================================
+
+# ------------------------------------------------------------
+# 1. Power BI - Local settings and cache
+# ------------------------------------------------------------
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# ------------------------------------------------------------
+# 2. Power BI - Temporary and backup files
+# ------------------------------------------------------------
+*.tmp
+*.temp
+*.bak
+*.backup
+~$*
+*.pbix.autorecover
+
+# ------------------------------------------------------------
+# 3. VS Code - Local editor settings
+# ------------------------------------------------------------
+.vscode/
+*.code-workspace
+
+# ------------------------------------------------------------
+# 4. Operating system files
+# ------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ------------------------------------------------------------
+# 5. Python - Optional scripts
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------
+# 6. Credentials and sensitive configuration
+# ------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# ------------------------------------------------------------
+# 7. Logs and temporary output
+# ------------------------------------------------------------
+*.log
+logs/
+temp/
+tmp/
+
+# ------------------------------------------------------------
+# 8. Local datasets - CSV and Excel
+# ------------------------------------------------------------
+# Do not upload interview datasets unless authorized.
+# Matches files inside folders named data or datasets.
+
+**/data/**/*.csv
+**/data/**/*.xlsx
+**/data/**/*.xls
+
+**/datasets/**/*.csv
+**/datasets/**/*.xlsx
+**/datasets/**/*.xls
+
+# ------------------------------------------------------------
+# 9. Power BI source files - KEEP VERSIONED
+# ------------------------------------------------------------
+# Do NOT ignore:
+# *.pbip
+# *.pbir
+# *.tmdl
+# *.dax
+# *.sql
+# *.json (required for Power BI project definitions)
+# *.pbix (decide case by case)
+# *.pbit (decide case by case)
+# *.Report/
+# *.SemanticModel/
