@@ -6,3 +6,11 @@ relationship AutoDetected_c947d260-b296-4d11-9e9d-3a698883f6cf
 	fromColumn: nyc_flights_fixed.tailnum
 	toColumn: nyc_planes.tailnum
 
+relationship 5a799a84-b0a4-c759-418b-42c8df5ac6a3
+	fromColumn: nyc_flights_fixed.flight_date
+	toColumn: dim_calendar.Date
+
+relationship AutoDetected_54d55fbb-71e3-47af-b63b-8e6a915a6876
+	fromColumn: nyc_flights_fixed.weather_key_etl
+	toColumn: nyc_weather.weather_key_etl
+

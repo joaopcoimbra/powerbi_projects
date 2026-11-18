@@ -1,15 +1,6 @@
 table nyc_flights_fixed
 	lineageTag: 8a04badf-915a-4c53-8bfd-759b36d9eefa
 
-	column Column1
-		dataType: int64
-		formatString: 0
-		lineageTag: a68982f5-f6db-4151-aa91-7a9d34b48093
-		summarizeBy: sum
-		sourceColumn: Column1
-
-		annotation SummarizationSetBy = Automatic
-
 	column year
 		dataType: int64
 		formatString: 0
@@ -169,11 +160,46 @@ table nyc_flights_fixed
 		annotation SummarizationSetBy = Automatic
 
 	column time_hour
-		dataType: dateTime
-		formatString: General Date
+		dataType: string
 		lineageTag: d17f26cf-c4e6-451b-86e4-0abb602a534a
 		summarizeBy: none
 		sourceColumn: time_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight_date =
+			
+			DATE(
+			    nyc_flights_fixed[year],
+			    nyc_flights_fixed[month],
+			    nyc_flights_fixed[day]
+			)
+		formatString: Short Date
+		lineageTag: c6fff3d5-4a6e-4e06-b058-6776d32f4993
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column weather_key = [origin] & "|" & [time_hour]
+		lineageTag: 85535397-7795-4d02-99e4-73792bdc71b9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column1
+		dataType: int64
+		formatString: 0
+		lineageTag: a7eac3b8-47a3-4dbc-ac14-722cacb5d237
+		summarizeBy: sum
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column weather_key_etl
+		dataType: string
+		lineageTag: 22cbbf5c-4f0e-452e-a060-336ab2682a68
+		summarizeBy: none
+		sourceColumn: weather_key_etl
 
 		annotation SummarizationSetBy = Automatic
 
@@ -183,9 +209,11 @@ table nyc_flights_fixed
 				let
 				    Source = Csv.Document(File.Contents("C:\Users\99848819\Downloads\nyc_flights_fixed.csv"),[Delimiter=",", Columns=20, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"", Int64.Type}, {"year", Int64.Type}, {"month", Int64.Type}, {"day", Int64.Type}, {"dep_time", Int64.Type}, {"sched_dep_time", Int64.Type}, {"dep_delay", Int64.Type}, {"arr_time", Int64.Type}, {"sched_arr_time", Int64.Type}, {"arr_delay", Int64.Type}, {"carrier", type text}, {"flight", Int64.Type}, {"tailnum", type text}, {"origin", type text}, {"dest", type text}, {"air_time", Int64.Type}, {"distance", Int64.Type}, {"hour", Int64.Type}, {"minute", Int64.Type}, {"time_hour", type datetime}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"", Int64.Type}, {"year", Int64.Type}, {"month", Int64.Type}, {"day", Int64.Type}, {"dep_time", Int64.Type}, {"sched_dep_time", Int64.Type}, {"dep_delay", Int64.Type}, {"arr_time", Int64.Type}, {"sched_arr_time", Int64.Type}, {"arr_delay", Int64.Type}, {"carrier", type text}, {"flight", Int64.Type}, {"tailnum", type text}, {"origin", type text}, {"dest", type text}, {"air_time", Int64.Type}, {"distance", Int64.Type}, {"hour", Int64.Type}, {"minute", Int64.Type}, {"time_hour", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{""}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "weather_key_etl", each Text.From([origin]) & "|" & Text.From([time_hour]))
 				in
-				    #"Changed Type"
+				    #"Added Custom"
 
 	annotation PBI_NavigationStepName = Navigation
 

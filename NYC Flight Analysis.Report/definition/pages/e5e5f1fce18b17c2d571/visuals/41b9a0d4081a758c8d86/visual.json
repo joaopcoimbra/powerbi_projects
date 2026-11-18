@@ -2,12 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "41b9a0d4081a758c8d86",
   "position": {
-    "x": 47.348951911220709,
-    "y": 78.125770653514181,
+    "x": 0.23530015253171335,
+    "y": 0,
     "z": 0,
-    "height": 139.67940813810111,
-    "width": 513.73612823674478,
-    "tabOrder": 0
+    "height": 136.29063097514339,
+    "width": 279.76469984746825
   },
   "visual": {
     "visualType": "shape",
@@ -94,7 +93,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Number of destinations connected to the airport'"
+                  "Value": "'Total destinations'"
                 }
               }
             },
@@ -107,9 +106,36 @@
             }
           }
         }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
   },
+  "parentGroupName": "de729d01ed4015a8b81e",
   "howCreated": "InsertVisualButton"
 }

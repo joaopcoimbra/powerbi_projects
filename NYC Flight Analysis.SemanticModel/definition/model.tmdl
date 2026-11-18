@@ -9,7 +9,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["nyc_airlines","nyc_flights_fixed","nyc_planes","nyc_weather","nyc_airports"]
+annotation PBI_QueryOrder = ["KPIs","nyc_airlines","nyc_flights_fixed","nyc_planes","nyc_weather","nyc_airports"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -18,6 +18,8 @@ ref table nyc_flights_fixed
 ref table nyc_planes
 ref table nyc_weather
 ref table nyc_airports
+ref table dim_calendar
+ref table KPIs
 
 ref cultureInfo en-US
 

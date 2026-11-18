@@ -13,7 +13,7 @@ table nyc_weather
 		dataType: int64
 		formatString: 0
 		lineageTag: 35abb524-ea63-4dbb-9b3f-7fd0e8f44f44
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: year
 
 		annotation SummarizationSetBy = Automatic
@@ -22,7 +22,7 @@ table nyc_weather
 		dataType: int64
 		formatString: 0
 		lineageTag: 1ba0650e-d9d3-42d2-9009-24c6f4a8a639
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: month
 
 		annotation SummarizationSetBy = Automatic
@@ -31,7 +31,7 @@ table nyc_weather
 		dataType: int64
 		formatString: 0
 		lineageTag: 8871d928-9b22-4226-b44d-9161007d285b
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: day
 
 		annotation SummarizationSetBy = Automatic
@@ -40,7 +40,7 @@ table nyc_weather
 		dataType: int64
 		formatString: 0
 		lineageTag: 228e98ef-7e85-4c2c-8f2a-e03d0c64589d
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: hour
 
 		annotation SummarizationSetBy = Automatic
@@ -48,7 +48,7 @@ table nyc_weather
 	column temp
 		dataType: double
 		lineageTag: 7b974e0f-d35d-43b0-acfd-c901b5f0d359
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: temp
 
 		annotation SummarizationSetBy = Automatic
@@ -58,7 +58,7 @@ table nyc_weather
 	column dewp
 		dataType: double
 		lineageTag: 31c4bb5e-d484-480f-a7fb-79a73e5e22c9
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: dewp
 
 		annotation SummarizationSetBy = Automatic
@@ -68,7 +68,7 @@ table nyc_weather
 	column humid
 		dataType: double
 		lineageTag: c7c282f8-3e70-4750-bf6f-486ff4992273
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: humid
 
 		annotation SummarizationSetBy = Automatic
@@ -86,7 +86,7 @@ table nyc_weather
 	column wind_speed
 		dataType: double
 		lineageTag: d92e846f-22ab-45d1-ae7d-6e98d6a79331
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: wind_speed
 
 		annotation SummarizationSetBy = Automatic
@@ -105,7 +105,7 @@ table nyc_weather
 		dataType: int64
 		formatString: 0
 		lineageTag: 27a1560d-0cc0-4d15-b281-31d4ffb12268
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: precip
 
 		annotation SummarizationSetBy = Automatic
@@ -122,17 +122,58 @@ table nyc_weather
 		dataType: int64
 		formatString: 0
 		lineageTag: 89646671-d488-472d-8141-034effaa93e0
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: visib
 
 		annotation SummarizationSetBy = Automatic
 
 	column time_hour
-		dataType: dateTime
-		formatString: General Date
+		dataType: string
 		lineageTag: d849ca64-13b7-4db9-9eb4-2473a9aec9b5
 		summarizeBy: none
 		sourceColumn: time_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column weather_key = [origin] & "|" & [time_hour]
+		lineageTag: 1abd101b-a3bc-47c3-b1db-26e21dca850e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column weather_condition =
+			
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(nyc_weather[precip]), "Unknown",
+			    nyc_weather[precip] > 0, "Precipitation",
+			    "No Precipitation"
+			)
+		lineageTag: 3d023c29-640d-4d1a-9044-f5af018ac9da
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column weather_key_etl
+		dataType: string
+		lineageTag: 9291acac-2a9d-4b9d-994f-5a4f2ca4e5f9
+		summarizeBy: none
+		sourceColumn: weather_key_etl
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visibility Range' =
+			
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(nyc_weather[visib]), "Unknown",
+			    nyc_weather[visib] < 2, "Under 2 mi",
+			    nyc_weather[visib] < 5, "2–5 mi",
+			    nyc_weather[visib] < 10, "5–10 mi",
+			    "10+ mi"
+			)
+		lineageTag: ccdb243a-ebeb-4564-ac00-4439e19eafd1
+		summarizeBy: none
 
 		annotation SummarizationSetBy = Automatic
 
@@ -142,9 +183,10 @@ table nyc_weather
 				let
 				    Source = Csv.Document(File.Contents("C:\Users\99848819\Downloads\nyc_weather.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"origin", type text}, {"year", Int64.Type}, {"month", Int64.Type}, {"day", Int64.Type}, {"hour", Int64.Type}, {"temp", type number}, {"dewp", type number}, {"humid", type number}, {"wind_dir", type text}, {"wind_speed", type number}, {"wind_gust", type text}, {"precip", Int64.Type}, {"pressure", type text}, {"visib", Int64.Type}, {"time_hour", type datetime}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"origin", type text}, {"year", Int64.Type}, {"month", Int64.Type}, {"day", Int64.Type}, {"hour", Int64.Type}, {"temp", type number}, {"dewp", type number}, {"humid", type number}, {"wind_dir", type text}, {"wind_speed", type number}, {"wind_gust", type text}, {"precip", Int64.Type}, {"pressure", type text}, {"visib", Int64.Type}, {"time_hour", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "weather_key_etl", each Text.From([origin]) & "|" & Text.From([time_hour]))
 				in
-				    #"Changed Type"
+				    #"Added Custom"
 
 	annotation PBI_NavigationStepName = Navigation
 

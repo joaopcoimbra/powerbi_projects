@@ -1,0 +1,113 @@
+table KPIs
+	lineageTag: 47e88990-7259-4fa2-9331-cee2a8beb08c
+
+	measure 'Distinct Destinations' =
+			
+			DISTINCTCOUNT(
+			    nyc_flights_fixed[dest]
+			)
+		formatString: 0
+		lineageTag: 2f6ef309-bac2-447d-a1a9-0c704c246c90
+
+	measure 'Avg Daily Destinations' =
+			
+			AVERAGEX(
+			    VALUES(dim_calendar[Date]),
+			    [Distinct Destinations]
+			)
+		formatString: 0
+		lineageTag: a32aac77-ef77-4fb3-b603-c669c0a130e7
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Flights' =
+			
+			COUNTROWS(nyc_flights_fixed)
+		formatString: 0
+		lineageTag: 1adc4d53-9654-4255-9a78-ad9ec7a6e1bd
+
+	measure 'Total Departure Delay' =
+			
+			SUMX(
+			    nyc_flights_fixed,
+			    MAX(
+			        nyc_flights_fixed[dep_delay],
+			        0
+			    )
+			)
+		formatString: 0
+		lineageTag: fc8ec266-dc2d-405d-85fc-f047f1e223e2
+
+	measure 'Avg Departure Delay' =
+			
+			AVERAGEX(
+			    nyc_flights_fixed,
+			    MAX(
+			        nyc_flights_fixed[dep_delay],
+			        0
+			    )
+			)
+		lineageTag: cde1e9e7-1a87-4f94-8d2b-348db389b24c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Airlines' =
+			
+			DISTINCTCOUNT(nyc_airlines[carrier])
+		formatString: 0
+		lineageTag: 373b2d42-ecb7-41c9-bb27-87cd8d37fb3e
+
+	measure 'Registered Aircraft' =
+			
+			DISTINCTCOUNT(nyc_planes[tailnum])
+		formatString: 0
+		lineageTag: 8abc097d-234f-4b1e-a7a8-06a81d3a74db
+
+	measure 'Origin Airports' =
+			
+			DISTINCTCOUNT(nyc_flights_fixed[origin])
+		formatString: 0
+		lineageTag: ae68e88a-c742-4d98-b88c-d4c224b5bc83
+
+	measure 'Total Seats Offered' =
+			
+			SUMX(
+			    nyc_flights_fixed,
+			    RELATED(nyc_planes[seats])
+			)
+		formatString: 0
+		lineageTag: 7ea761fa-1303-4215-aab4-3e524d528b23
+
+	measure 'Avg Daily Seats Offered' =
+			
+			DIVIDE(
+			    [Total Seats Offered],
+			    COUNTROWS(VALUES(dim_calendar[Date]))
+			)
+		lineageTag: fa4560b5-0d9d-47f3-9db3-259c9059c051
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column KPIs
+		dataType: string
+		isHidden
+		lineageTag: 43ec5d39-2108-43e7-8820-2fe80eb2e952
+		summarizeBy: none
+		sourceColumn: KPIs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition KPIs = m
+		mode: import
+		source =
+				let
+				    Source = ""
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
