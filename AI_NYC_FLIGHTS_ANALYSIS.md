@@ -277,19 +277,6 @@ DISTINCTCOUNT(nyc_planes[tailnum])
 | **Weather Impact** | 6 | Rain vs dry delay KPI/bar chart, weather-variable correlations, scatter plots and explanatory tooltip |
 | **Airlines & Fleet** | 7–10 | Flights by airline ranking, seats/day by airline ranking, manufacturer and model tables with clear definitions |
 
-### Validation checklist
-
-- [ ] Total flights = **277,977** and dates = **365**.
-- [ ] Annual distinct destinations = **100**.
-- [ ] Average daily distinct destinations ≈ **81.0767**.
-- [ ] August flights = **24,290**.
-- [ ] July net delay = **535,995 minutes**; positive-only delay = **583,738 minutes**.
-- [ ] Weather matches = **276,688**; unmatched = **1,289**.
-- [ ] All flights match an aircraft row on `tailnum`.
-- [ ] Airline flight ranking is not affected by duplicating rows during joins.
-- [ ] Daily seat capacity uses **one seat count per flight**, not one per aircraft.
-- [ ] Manufacturer/model rankings state whether they use **aircraft records** or **flight records**.
-
 ## Conclusions
 
 Across the supplied 2013 NYC departure records, **August** had the largest number of flights while **July** had the highest cumulative departure delay. **Sunday** showed the broadest average daily destination coverage. **United Air Lines** led both flight volume and nominal seats offered per day. Rainy observations were associated with substantially higher average departure delays, although simple linear correlations with individual weather variables remained weak. **Boeing** was the most common manufacturer in the aircraft reference table; the **737-7H4** was the most common registered model, while the **A320-232** was the most frequently operated model.
