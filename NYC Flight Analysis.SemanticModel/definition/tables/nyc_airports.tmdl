@@ -1,0 +1,87 @@
+table nyc_airports
+	lineageTag: c0f84ee9-804c-4542-991b-eb47aefa0406
+
+	column faa
+		dataType: string
+		lineageTag: 614ec6d9-98b6-40f5-9af4-f57be2b13d79
+		summarizeBy: none
+		sourceColumn: faa
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: cd8ff735-476d-4a88-a09f-dfa1dbab24e8
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: 59befa14-5b34-4723-a029-5e0d491d7f92
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: aa066656-f0bd-4e62-9ff2-4ed82d1a19c9
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column altitude
+		dataType: int64
+		formatString: 0
+		lineageTag: d651d537-6638-4c1b-9b55-039c471b2697
+		summarizeBy: sum
+		sourceColumn: altitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column timezone
+		dataType: int64
+		formatString: 0
+		lineageTag: bfc08aae-3f65-4661-aa25-50639042370c
+		summarizeBy: sum
+		sourceColumn: timezone
+
+		annotation SummarizationSetBy = Automatic
+
+	column dst
+		dataType: string
+		lineageTag: d82b7086-d0f7-4b5f-b628-8951625fff4d
+		summarizeBy: none
+		sourceColumn: dst
+
+		annotation SummarizationSetBy = Automatic
+
+	column timezone_name
+		dataType: string
+		lineageTag: 8137458c-331a-4a5d-a17a-a940b3856a8b
+		summarizeBy: none
+		sourceColumn: timezone_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition nyc_airports = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\99848819\Downloads\nyc_airports.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"faa", type text}, {"name", type text}, {"latitude", type number}, {"longitude", type number}, {"altitude", Int64.Type}, {"timezone", Int64.Type}, {"dst", type text}, {"timezone_name", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

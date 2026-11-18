@@ -1,0 +1,116 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "32340c8448750b68069e",
+  "position": {
+    "x": 48.333333333333336,
+    "y": 233.33333333333334,
+    "z": 2000,
+    "height": 448.33333333333337,
+    "width": 513.33333333333337,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_flights_fixed"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "Sum(nyc_flights_fixed.year)",
+              "nativeQueryRef": "year"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "nyc_flights_fixed"
+                    }
+                  },
+                  "Property": "month"
+                }
+              },
+              "queryRef": "Sum(nyc_flights_fixed.month)",
+              "nativeQueryRef": "month"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "nyc_flights_fixed"
+                        }
+                      },
+                      "Property": "flight"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "Sum(nyc_flights_fixed.flight)",
+              "nativeQueryRef": "Count of flight1"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "nyc_flights_fixed"
+                      }
+                    },
+                    "Property": "flight"
+                  }
+                },
+                "Function": 5
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "73.05270101139939D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(nyc_flights_fixed.year)"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

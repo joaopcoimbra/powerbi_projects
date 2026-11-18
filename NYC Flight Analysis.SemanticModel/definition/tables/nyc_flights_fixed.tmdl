@@ -1,0 +1,193 @@
+table nyc_flights_fixed
+	lineageTag: 8a04badf-915a-4c53-8bfd-759b36d9eefa
+
+	column Column1
+		dataType: int64
+		formatString: 0
+		lineageTag: a68982f5-f6db-4151-aa91-7a9d34b48093
+		summarizeBy: sum
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: afcf3f01-331b-4db7-bd1f-a431bc3d1a0d
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: c2f9d0c1-3c24-42b1-98eb-c97bd6493b6f
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		lineageTag: b3fc2e44-5548-43c8-b8ab-b1bf9b82f520
+		summarizeBy: sum
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column dep_time
+		dataType: int64
+		formatString: 0
+		lineageTag: d1954dda-704b-4d95-a681-0a48bb141cb0
+		summarizeBy: sum
+		sourceColumn: dep_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column sched_dep_time
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c7af3aa-f33a-48fc-a9f8-5f253eb72cac
+		summarizeBy: sum
+		sourceColumn: sched_dep_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column dep_delay
+		dataType: int64
+		formatString: 0
+		lineageTag: 40c1bb5a-f488-498f-82de-85715692d786
+		summarizeBy: sum
+		sourceColumn: dep_delay
+
+		annotation SummarizationSetBy = Automatic
+
+	column arr_time
+		dataType: int64
+		formatString: 0
+		lineageTag: faec8120-76f1-4f77-a424-0173cdd4ae94
+		summarizeBy: sum
+		sourceColumn: arr_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column sched_arr_time
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d07c548-8f52-402e-bf6e-68fcaf92f1f6
+		summarizeBy: sum
+		sourceColumn: sched_arr_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column arr_delay
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ff8485c-9010-402f-ae8e-533aff109ac3
+		summarizeBy: sum
+		sourceColumn: arr_delay
+
+		annotation SummarizationSetBy = Automatic
+
+	column carrier
+		dataType: string
+		lineageTag: c5ecc5f1-26eb-44b8-b04f-170690f08b1a
+		summarizeBy: none
+		sourceColumn: carrier
+
+		annotation SummarizationSetBy = Automatic
+
+	column flight
+		dataType: int64
+		formatString: 0
+		lineageTag: a8d25a2d-1424-44b7-8e64-72fd6e8d26b1
+		summarizeBy: sum
+		sourceColumn: flight
+
+		annotation SummarizationSetBy = Automatic
+
+	column tailnum
+		dataType: string
+		lineageTag: 1d1bb511-7105-401b-83dd-151ad18762f8
+		summarizeBy: none
+		sourceColumn: tailnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column origin
+		dataType: string
+		lineageTag: c220fac7-ea58-44e1-93f5-323af37fd0a4
+		summarizeBy: none
+		sourceColumn: origin
+
+		annotation SummarizationSetBy = Automatic
+
+	column dest
+		dataType: string
+		lineageTag: 88dca5a0-64fc-442e-ab70-0700d26f91ee
+		summarizeBy: none
+		sourceColumn: dest
+
+		annotation SummarizationSetBy = Automatic
+
+	column air_time
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fd14802-20b5-4c44-a16f-686211c944c3
+		summarizeBy: sum
+		sourceColumn: air_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column distance
+		dataType: int64
+		formatString: 0
+		lineageTag: e8d714df-7273-498e-95f0-8badd5e499be
+		summarizeBy: sum
+		sourceColumn: distance
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour
+		dataType: int64
+		formatString: 0
+		lineageTag: 78913438-d316-42a4-8cec-6ba7ebc0e790
+		summarizeBy: sum
+		sourceColumn: hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column minute
+		dataType: int64
+		formatString: 0
+		lineageTag: a7622491-0287-4e26-9010-b980f971d074
+		summarizeBy: sum
+		sourceColumn: minute
+
+		annotation SummarizationSetBy = Automatic
+
+	column time_hour
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d17f26cf-c4e6-451b-86e4-0abb602a534a
+		summarizeBy: none
+		sourceColumn: time_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	partition nyc_flights_fixed = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\99848819\Downloads\nyc_flights_fixed.csv"),[Delimiter=",", Columns=20, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"", Int64.Type}, {"year", Int64.Type}, {"month", Int64.Type}, {"day", Int64.Type}, {"dep_time", Int64.Type}, {"sched_dep_time", Int64.Type}, {"dep_delay", Int64.Type}, {"arr_time", Int64.Type}, {"sched_arr_time", Int64.Type}, {"arr_delay", Int64.Type}, {"carrier", type text}, {"flight", Int64.Type}, {"tailnum", type text}, {"origin", type text}, {"dest", type text}, {"air_time", Int64.Type}, {"distance", Int64.Type}, {"hour", Int64.Type}, {"minute", Int64.Type}, {"time_hour", type datetime}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

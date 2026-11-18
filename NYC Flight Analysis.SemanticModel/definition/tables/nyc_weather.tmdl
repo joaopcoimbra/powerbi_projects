@@ -1,0 +1,152 @@
+table nyc_weather
+	lineageTag: 19fb117b-4410-40fb-9a09-494007e1a44a
+
+	column origin
+		dataType: string
+		lineageTag: fb3b7d92-410e-4e25-8ec6-a480b4265ed3
+		summarizeBy: none
+		sourceColumn: origin
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 35abb524-ea63-4dbb-9b3f-7fd0e8f44f44
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ba0650e-d9d3-42d2-9009-24c6f4a8a639
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		lineageTag: 8871d928-9b22-4226-b44d-9161007d285b
+		summarizeBy: sum
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour
+		dataType: int64
+		formatString: 0
+		lineageTag: 228e98ef-7e85-4c2c-8f2a-e03d0c64589d
+		summarizeBy: sum
+		sourceColumn: hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column temp
+		dataType: double
+		lineageTag: 7b974e0f-d35d-43b0-acfd-c901b5f0d359
+		summarizeBy: sum
+		sourceColumn: temp
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dewp
+		dataType: double
+		lineageTag: 31c4bb5e-d484-480f-a7fb-79a73e5e22c9
+		summarizeBy: sum
+		sourceColumn: dewp
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column humid
+		dataType: double
+		lineageTag: c7c282f8-3e70-4750-bf6f-486ff4992273
+		summarizeBy: sum
+		sourceColumn: humid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wind_dir
+		dataType: string
+		lineageTag: 1a56c844-1880-44d6-9ba7-f009f70becf1
+		summarizeBy: none
+		sourceColumn: wind_dir
+
+		annotation SummarizationSetBy = Automatic
+
+	column wind_speed
+		dataType: double
+		lineageTag: d92e846f-22ab-45d1-ae7d-6e98d6a79331
+		summarizeBy: sum
+		sourceColumn: wind_speed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wind_gust
+		dataType: string
+		lineageTag: d79e3837-b23c-4f85-b714-77028fb2c220
+		summarizeBy: none
+		sourceColumn: wind_gust
+
+		annotation SummarizationSetBy = Automatic
+
+	column precip
+		dataType: int64
+		formatString: 0
+		lineageTag: 27a1560d-0cc0-4d15-b281-31d4ffb12268
+		summarizeBy: sum
+		sourceColumn: precip
+
+		annotation SummarizationSetBy = Automatic
+
+	column pressure
+		dataType: string
+		lineageTag: 71b15f70-1cb6-45f8-abd3-d921fd194f7b
+		summarizeBy: none
+		sourceColumn: pressure
+
+		annotation SummarizationSetBy = Automatic
+
+	column visib
+		dataType: int64
+		formatString: 0
+		lineageTag: 89646671-d488-472d-8141-034effaa93e0
+		summarizeBy: sum
+		sourceColumn: visib
+
+		annotation SummarizationSetBy = Automatic
+
+	column time_hour
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d849ca64-13b7-4db9-9eb4-2473a9aec9b5
+		summarizeBy: none
+		sourceColumn: time_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	partition nyc_weather = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\99848819\Downloads\nyc_weather.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"origin", type text}, {"year", Int64.Type}, {"month", Int64.Type}, {"day", Int64.Type}, {"hour", Int64.Type}, {"temp", type number}, {"dewp", type number}, {"humid", type number}, {"wind_dir", type text}, {"wind_speed", type number}, {"wind_gust", type text}, {"precip", Int64.Type}, {"pressure", type text}, {"visib", Int64.Type}, {"time_hour", type datetime}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
