@@ -1,0 +1,87 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 664.89104387357725,
+            "y": 3.2170989799772336
+          },
+          "nodeIndex": "nyc_airlines",
+          "nodeLineageTag": "c3d4f996-c461-4554-afd7-18d1068c5cb3",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 538.10175818042012,
+            "y": 371.60262274837936
+          },
+          "nodeIndex": "nyc_airports",
+          "nodeLineageTag": "c0f84ee9-804c-4542-991b-eb47aefa0406",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 259.50690438952392,
+            "y": 0
+          },
+          "nodeIndex": "nyc_flights_fixed",
+          "nodeLineageTag": "8a04badf-915a-4c53-8bfd-759b36d9eefa",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2.0826729938775514,
+            "y": 308.64395924531806
+          },
+          "nodeIndex": "nyc_planes",
+          "nodeLineageTag": "4677a21d-1ad6-4921-85e9-cea41a6b8a1e",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 941.89507569572606,
+            "y": 185.66397878523406
+          },
+          "nodeIndex": "nyc_weather",
+          "nodeLineageTag": "19fb117b-4410-40fb-9a09-494007e1a44a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.95554390096882,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

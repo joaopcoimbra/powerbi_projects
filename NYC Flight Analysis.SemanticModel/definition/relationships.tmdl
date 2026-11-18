@@ -1,0 +1,8 @@
+relationship AutoDetected_ba6727e7-9043-413f-8a74-ef43b7fa6351
+	fromColumn: nyc_flights_fixed.carrier
+	toColumn: nyc_airlines.carrier
+
+relationship AutoDetected_c947d260-b296-4d11-9e9d-3a698883f6cf
+	fromColumn: nyc_flights_fixed.tailnum
+	toColumn: nyc_planes.tailnum
+

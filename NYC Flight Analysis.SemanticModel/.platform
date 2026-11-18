@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "NYC Flight Analysis"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "699c6bbc-bcc9-448a-9997-9aa5c66f2397"
+  }
+}
